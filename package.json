@@ -1,0 +1,23 @@
+{
+  "name": "completenodejsdevelopercourse_task",
+  "version": "1.0.0",
+  "description": "Task notes project from The Complete Node JS Developer Course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gbeto21/CompleteNodeJSDeveloperCourse_Task.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gbeto21/CompleteNodeJSDeveloperCourse_Task/issues"
+  },
+  "homepage": "https://github.com/gbeto21/CompleteNodeJSDeveloperCourse_Task#readme",
+  "dependencies": {
+    "mongodb": "^3.1.10"
+  }
+}

@@ -1,10 +1,12 @@
 // CRUD operations.
-
-const mongodb = require("mongodb");
-const MongoClient = mongodb.MongoClient;
+const { MongoClient, ObjectID } = require("mongodb");
 
 const connectionURL = "mongodb://127.0.0.1:27017";
 const dataBaseName = "task-manager";
+
+const id = new ObjectID();
+console.log(id.id.length);
+console.log(id.toHexString().length);
 
 MongoClient.connect(
   connectionURL,
@@ -45,18 +47,18 @@ MongoClient.connect(
     // );
 
     //Insert Many tasks.
-    db.collection("tasks").insertMany(
-      [
-        { description: "Task 1", completed: true },
-        { description: "Task 2", completed: true },
-        { description: "Task 3", completed: false },
-      ],
-      (error, result) => {
-        if (error) {
-          return console.error("Unable to insert tasks.", error);
-        }
-        console.log(result.ops);
-      }
-    );
+    // db.collection("tasks").insertMany(
+    //   [
+    //     { description: "Task 1", completed: true },
+    //     { description: "Task 2", completed: true },
+    //     { description: "Task 3", completed: false },
+    //   ],
+    //   (error, result) => {
+    //     if (error) {
+    //       return console.error("Unable to insert tasks.", error);
+    //     }
+    //     console.log(result.ops);
+    //   }
+    // );
   }
 );

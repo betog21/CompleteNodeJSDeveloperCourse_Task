@@ -11,3 +11,11 @@ cd /usr/local/bin/robo3t/bin
 
 Run robot 3t
 ./robo3t
+
+```js
+//                       FULLFIELD
+//                       /
+//Promise -- PENDING -->
+//                       \
+//                       REJECTED
+```

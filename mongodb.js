@@ -17,22 +17,23 @@ MongoClient.connect(
     }
 
     const db = client.db(dataBaseName);
-    db.collection("tasks")
-      .updateMany(
-        {
-          completed: false,
-        },
-        {
-          $set: {
-            completed: true,
-          },
-          // $inc: {
-          //   age: 1,
-          // },
-        }
-      )
+    db.collection("users")
+      .deleteMany({
+        age: 27,
+      })
       .then((result) => {
-        console.log(result.modifiedCount);
+        console.log(result);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    db.collection("tasks")
+      .deleteOne({
+        _id: new ObjectID("6238a792f9a9236f966a9c39"),
+      })
+      .then((result) => {
+        console.log(result);
       })
       .catch((error) => {
         console.error(error);

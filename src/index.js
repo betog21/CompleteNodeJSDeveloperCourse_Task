@@ -61,12 +61,26 @@ app.post("/tasks", (req, res) => {
 app.get("/tasks", (req, res) => {
   Task.find({})
     .then((tasks) => {
-      res.send(tasks);
+      res.status(202).send(tasks);
     })
-    .catch((error) => {});
+    .catch((error) => {
+      res.status(500).send(error);
+    });
 });
 
-app.get("/tasks/:id", (req, res) => {});
+app.get("/tasks/:id", (req, res) => {
+  Task.findById(req.params.id)
+    .then((task) => {
+      if (task) {
+        res.send(task);
+      } else {
+        res.status(404).send();
+      }
+    })
+    .catch((error) => {
+      res.status(500).send();
+    });
+});
 
 app.listen(port, () => {
   console.log("Server is running on port: " + port);

@@ -72,6 +72,20 @@ app.patch("/users/:id", async (req, res) => {
   }
 });
 
+app.delete("/users/:id", async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+
+    if (!user) {
+      return res.status(404).send();
+    }
+
+    return res.send(user);
+  } catch (error) {
+    res.status(500).send();
+  }
+});
+
 app.post("/tasks", async (req, res) => {
   try {
     const task = new Task(req.body);

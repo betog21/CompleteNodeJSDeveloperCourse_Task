@@ -3,6 +3,7 @@ const router = new express.Router();
 const User = require("../models/user");
 const auth = require("../middleware/auth");
 const multer = require("multer");
+const sharp = require("sharp");
 
 router.post("/users", async (req, res) => {
   try {
@@ -111,12 +112,17 @@ router.post(
   upload.single("avatar"),
   async (req, res) => {
     try {
-      req.user.avatar = req.file.buffer;
+      const buffer = await sharp(req.file.buffer)
+        .resize({ width: 250, height: 250 })
+        .png()
+        .toBuffer();
+      req.user.avatar = buffer;
       await req.user.save();
       res.send();
     } catch (error) {
       console.log("Error on request avatar.");
       console.error(error);
+      res.status(500).send();
     }
   },
   (error, req, res, next) => {
@@ -140,7 +146,7 @@ router.get("/users/:id/avatar", async (req, res) => {
     if (!user || !user.avatar) {
       return res.status(400).send();
     }
-    res.set("Content-Type", "image/jpg");
+    res.set("Content-Type", "image/png");
     res.send(user.avatar);
   } catch (error) {
     console.error(error);

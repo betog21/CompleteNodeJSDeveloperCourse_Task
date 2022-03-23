@@ -106,13 +106,20 @@ const upload = multer({
   },
 });
 
-router.post("/user/me/avatar", upload.single("avatar"), (req, res) => {
-  try {
-    res.send();
-  } catch (error) {
-    console.log("Error on request avatar.");
-    console.error(error);
+router.post(
+  "/user/me/avatar",
+  upload.single("avatar"),
+  (req, res) => {
+    try {
+      res.send();
+    } catch (error) {
+      console.log("Error on request avatar.");
+      console.error(error);
+    }
+  },
+  (error, req, res, next) => {
+    res.status(400).send({ error: error.message });
   }
-});
+);
 
 module.exports = router;

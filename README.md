@@ -19,3 +19,9 @@ Run robot 3t
 //                       \
 //                       REJECTED
 ```
+
+Run mongodb locally on Mac:
+brew services start mongodb-community@5.0
+
+Stop mongodb locally on Mac:
+brew services stop mongodb-community@5.0

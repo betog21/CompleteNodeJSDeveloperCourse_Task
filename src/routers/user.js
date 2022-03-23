@@ -106,7 +106,7 @@ const upload = multer({
 });
 
 router.post(
-  "/user/me/avatar",
+  "/users/me/avatar",
   auth,
   upload.single("avatar"),
   async (req, res) => {
@@ -123,5 +123,15 @@ router.post(
     res.status(400).send({ error: error.message });
   }
 );
+
+router.delete("/users/me/avatar", auth, async (req, res) => {
+  try {
+    req.user.avatar = undefined;
+    await req.user.save();
+    res.send();
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 module.exports = router;

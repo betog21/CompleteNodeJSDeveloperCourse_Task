@@ -1,11 +1,20 @@
 const request = require("supertest");
 const app = require("../src/app");
 const User = require("../src/models/user");
+const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 
+const userOneId = new mongoose.Types.ObjectId();
 const userOne = {
+  _id: userOneId,
   name: "Kranky",
   email: "kranky@kranky.com",
   password: "PassKranky1010#",
+  tokens: [
+    {
+      token: jwt.sign({ _id: userOneId }, process.env.SECRETWORD),
+    },
+  ],
 };
 
 beforeEach(async () => {
@@ -40,3 +49,27 @@ test("Shoul not login nonexistent user", async () => {
     .send({ email: userOne.email, password: "BadPassword" })
     .expect(500);
 });
+
+test("Should get profile for user.", async () => {
+  await request(app)
+    .get("/users/me")
+    .set("Authorization", `Bearer ${userOne.tokens[0].token}`)
+    .send()
+    .expect(200);
+});
+
+test("Should not get profile for unauthenticated user", async () => {
+  await request(app).get("/users/me").send().expect(401);
+});
+
+test("Should delete account for user", async () => {
+  await request(app)
+    .delete("/users/me")
+    .set("Authorization", `Bearer ${userOne.tokens[0].token}`)
+    .send()
+    .expect(200);
+});
+
+test("Should not delete account for unauthenticated user", async ()=>{
+    await request(app).get("/users/me").send().expect(401)
+})
